@@ -1,4 +1,4 @@
-name: firstapp
+name: displaytracker
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -23,15 +23,20 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  google_maps_flutter: ^0.5.21+8
-  firebase_database: ^0.4.1
-  firebase_core: any
+  firebase_database : ^3.0.7
+  firebase_core: ^0.4.0+9
+  firebase_auth: ^0.14.0+5
+  google_maps_flutter: ^0.5.11
+
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 
+module:
+    androidX: true // Add this line.
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -44,9 +49,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #  - images/a_dot_burr.jpeg
-  #  - images/a_dot_ham.jpeg
+  assets:
+   - assets/signin.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -59,10 +63,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: Carter_One
-      fonts:
-        - asset: assets/fonts/CarterOne-Regular.ttf
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

@@ -7,9 +7,61 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.google.gms:google-services:4.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.google.gms:google-services:4.3.2'  // Google Services plugin
+    }
+    subprojects {
+        project.configurations.all {
+            resolutionStrategy.eachDependency { details ->
+                if (details.requested.group == 'com.android.support'
+                        && !details.requested.name.contains('multidex') ) {
+                    details.useVersion "27.1.1"
+                }
 
+                if (details.requested.group == 'androidx.core'
+                        && !details.requested.name.contains('androidx') ) {
+                    details.useVersion "1.0.0-rc01"
+                }
+                   if (details.requested.group == 'androidx.interpolator'
+                        && !details.requested.name.contains('androidx') ) {
+                    details.useVersion "1.0.0-rc01"
+                }
+                   if (details.requested.group == 'com.google.android.gms:play-services-tasks'
+                      ) {
+                    details.useVersion "16.0.1"
+                }
+                
+                   if (details.requested.group == 'androidx.coordinatorlayout'
+                        && !details.requested.name.contains('androidx') ) {
+                    details.useVersion "1.0.0-rc01"
+                }
+                 
+                   if (details.requested.group == 'androidx.swiperefreshlayout'
+                        && !details.requested.name.contains('androidx') ) {
+                    details.useVersion "1.0.0-rc01"
+                }
+                   if (details.requested.group == 'androidx.print'
+                        && !details.requested.name.contains('androidx') ) {
+                    details.useVersion "1.0.0-rc01"
+                }
+                  if (details.requested.group == 'androidx.customview'
+                        && !details.requested.name.contains('androidx') ) {
+                    details.useVersion "1.0.0-rc01"
+                }
+                 if (details.requested.group == 'androidx.fragment'
+                        && !details.requested.name.contains('androidx') ) {
+                    details.useVersion "1.0.0-rc01"
+                }
+                if (details.requested.group == 'com.google.android.gms:play-services-basement'
+                        ) {
+                    details.useVersion "16.0.1"
+                }
+                if (details.requested.group == 'com.google.android.gms:play-services-base'
+                        ) {
+                    details.useVersion "16.0.1"
+                }
+            }
+        }
     }
 }
 

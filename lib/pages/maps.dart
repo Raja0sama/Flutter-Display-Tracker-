@@ -1,28 +1,39 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
-class MyApp extends StatelessWidget {
+class Mapps extends StatelessWidget {
+  final String id;
+  Mapps(this.id);
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      home: Map(),
+      home: Map(id),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class Map extends StatefulWidget {
+  final String id;
+  Map(this.id);
   @override
-  _MapState createState() => _MapState();
+  _MapState createState() => _MapState(id);
 }
 
 class _MapState extends State<Map> {
+  final String id;
+  var data;
+  var lat,lng;
+  _MapState(this.id);
+  
   Completer<GoogleMapController> _controller = Completer();
   static const LatLng _center = const LatLng(45.521569, -122.677433);
+   final databaseReference = FirebaseDatabase.instance.reference();
+
   final Set<Marker> _markers = {};
   LatLng _lastMapPosition = _center;
   MapType _currentMapType = MapType.normal;
@@ -35,6 +46,42 @@ class _MapState extends State<Map> {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(_position1));
   }
+   void initState() {
+    super.initState();
+    databaseReference.child('locations/'+id).once().then((DataSnapshot snapshot) {
+      lng = snapshot.value['longitude'];
+      lat = snapshot.value['latitude'];
+      LatLng position =  LatLng(lat, lng);
+      _onAddMarkerButton(position);
+      data = snapshot.value;
+    });
+     databaseReference.child('locations/'+id).onChildAdded.listen(_onEntryAdded);
+    databaseReference.child('locations/'+id).onChildChanged.listen(_onEntryAdded);
+  }
+   _onEntryAdded(Event event) {
+     if (!mounted) return;
+
+
+     if(event.snapshot.key == "latitude"){
+    setState(() {
+       lat= event.snapshot.value;
+       LatLng position =  LatLng(lat, lng);
+      _onAddMarkerButton(position);
+    });
+     }
+     if(event.snapshot.key == "longitude"){
+       
+    setState(() {
+      lng = event.snapshot.value;
+       LatLng position =  LatLng(lat, lng);
+      _onAddMarkerButton(position);
+    });
+     }
+     
+
+  }
+
+
 
   _onCameraMove(CameraPosition position) {
     _lastMapPosition = position.target;
@@ -56,7 +103,7 @@ class _MapState extends State<Map> {
   _ChangePosi(position) async{
 final GoogleMapController controller = await _controller.future;
       CameraPosition _position1 = CameraPosition(
-          bearing: 192.833, target: position, tilt: 59.440, zoom: 9.0);
+          bearing: 192.833, target: position, tilt: 0.440, zoom:20.0);
       controller.animateCamera(CameraUpdate.newCameraPosition(_position1));
   }
   _onAddMarkerButton(position) {
@@ -81,7 +128,7 @@ final GoogleMapController controller = await _controller.future;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: new AppBar(title: new Text('Map')),
+      appBar: new AppBar(title: new Text(id)),
       body: Stack(
         children: <Widget>[
           GoogleMap(
@@ -97,15 +144,15 @@ final GoogleMapController controller = await _controller.future;
               alignment: Alignment.topRight,
               child: Column(
                 children: <Widget>[
-                  button(_onMapTypePressed, Icons.map),
+                  button(_onMapTypePressed, Icons.map,'123123'),
                   SizedBox(
                     height: 16.0,
                   ),
-                  button(Pocess, Icons.add_location),
+                  button(Pocess, Icons.add_location,'324sadd'),
                   SizedBox(
                     height: 16.0,
                   ),
-                  button(_gotoPosition1, Icons.location_searching)
+                  button(_gotoPosition1, Icons.location_searching,'asdsad2e')
                 ],
               ),
             ),
@@ -115,8 +162,9 @@ final GoogleMapController controller = await _controller.future;
     );
   }
 
-  Widget button(Function function, IconData icon) {
+  Widget button(Function function, IconData icon,String a) {
     return FloatingActionButton(
+          heroTag: a,
       onPressed: function,
       materialTapTargetSize: MaterialTapTargetSize.padded,
       backgroundColor: Colors.blue,
