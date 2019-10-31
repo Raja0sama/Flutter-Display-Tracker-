@@ -1,16 +1,34 @@
-# displaytracker
+# Displaytracker 🚗🚗🚗🚗💘💘💘💘
 
-A new Flutter project.
 
-## Getting Started
+This App is Will Display the Tracker Result on your android Screen.
+The App is a Flutter project, so make sure you have a running flutter envoirment set up on your pc
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+Backend - Firebase
+Frontend - Flutter
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Functionality ? 
+- Tracking
+- Authentication
+- Adding New Person
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+How to Make it work ? 
+- Clone it
+- Make sure you have firebase account
+- Create project or use the one if have already used Tracker- Java
+- Get another Google_service.json
+- flutter run 
+
+
+Your Most Welcome To Contribute as you like. 🎉
+
+
+Screenshots : 
+
+
+.<img src="https://i.imgur.com/NdbcaQO.jpg" width="280"/>
+<img src="https://i.imgur.com/mQEwKiJ.jpg" width="280"/>
+.<img src="https://i.imgur.com/MvknlU9.jpg" width="280"/>
+<img src="https://i.imgur.com/5OiCb1p.jpg" width="280"/>
